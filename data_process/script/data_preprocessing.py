@@ -7,7 +7,7 @@ import random
 # scene_name_list.sort()
 scene_name_list = []
 #for i in range(100):
-for i in range(100, 190):
+for i in range(0, 100):
     scene_name_list.append('scene_{}'.format(str(i).zfill(4)))
 
 print('************************************************')
@@ -132,47 +132,6 @@ for scene_name in scene_name_list:
             test_total_number += 1
             test_count += 1
 
-        # if int(img_index) == 0:
-            # print(grasp.shape)
-            # tmp_mask = grasp[:, 0] > 720
-            # print(grasp[tmp_mask].shape)
-            # print(theta.shape)
-            # print(theta[30:50])
-            # print(rotation_class.shape)
-            # print(rotation_class[40:70])
-            # print(center_x.shape)
-            # print(center_x[30:50])
-            # print(center_y.shape)
-            # print(center_y[30:50])
-            # print(width.shape)
-            # print(width[30:50])
-            # print(height.shape)
-            # print(height[30:50])
-            # print(x_min.shape)
-            # print(x_min[30:50])
-            # print(y_min.shape)
-            # print(y_min[30:50])
-            # print(x_max.shape)
-            # print(x_max[30:50])
-            # print(y_max.shape)
-            # print(y_max[30:50])
-            # print(rgb_img.shape)
-            # print(rgb_img[123][470:490])
-            # print(b_img.shape)
-            # print(b_img[654][970:990])
-            # print(reshaped_g_img.shape)
-            # print(reshaped_g_img[123][470:490])
-            # print(reshaped_r_img.shape)
-            # print(reshaped_r_img[123][470:490])
-            # print(reshaped_depth_img.shape)
-            # print(reshaped_depth_img[123][470:490])
-            # print(img.shape)
-            # print(img[123][470:490])
-            # print(reshaped_depth_img.shape)
-            # print(reshaped_depth_img[456][770:790])
-            # print(img.shape)
-            # print(img[456][770:790])
-            # cv2.imwrite('1.png', img)
     # record the list
     f_train = open('../grasp_data/ImageSets/train.txt', 'a')
     f_train.writelines(log_train_list)
