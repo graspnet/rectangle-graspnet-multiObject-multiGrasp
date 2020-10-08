@@ -21,6 +21,8 @@ from nets.resnet_v1 import resnetv1
 import scipy
 from shapely.geometry import Polygon
 
+import graspnet_config
+
 pi = scipy.pi
 dot = scipy.dot
 sin = scipy.sin
@@ -85,11 +87,15 @@ def count_true_positive(class_name, dets, theta, true_polygon_list, detected_gt_
 def get_true_grasps(scene_name, image_index):
     # Load the ground truth grasps
     scene_index = scene_name[-4:]
-    if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index):
-        grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index + '/'
+    if os.path.exists(os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp', scene_index)):
+    # if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index):
+        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp', scene_index)
+        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index + '/'
     else:
-        grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/'
-    grasp_path = grasp_base_path + image_index + '.npy'
+        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp')
+        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/'
+    grasp_path = os.path.join(grasp_base_path, image_index + '.npy')
+    # grasp_path = grasp_base_path + image_index + '.npy'
     grasp = np.load(grasp_path)
     mask = grasp[:, 5] <= 0.1
     grasp = grasp[mask]
@@ -130,10 +136,8 @@ def demo(sess, net, image_name, CONF_THRESHES):
     """Detect object classes in an image using pre-computed object proposals."""
 
     # Load the demo image
-    im_file = os.path.join(cfg.DATA_DIR, 'demo/Images', image_name)
+    im_file = os.path.join(cfg.DATA_DIR, 'demo', 'Images', image_name)
     im = cv2.imread(im_file, cv2.IMREAD_UNCHANGED)
-    # im_rgb_file = '/DATA2/Benchmark/graspnet/scenes/' + image_name[:10] + '/kinect/rgb/' + image_name[11:15] + '.png'
-    # im_rgb = cv2.imread(im_rgb_file, cv2.IMREAD_UNCHANGED)
 
     scene_name = image_name[:10] # 'scene_0021'
     # scene_index = scene_name[-4:]
@@ -145,11 +149,6 @@ def demo(sess, net, image_name, CONF_THRESHES):
     timer = Timer()
     timer.tic()
     scores, boxes = im_detect(sess, net, im)
-
-    #scores_max = scores[:,1:-1].max(axis=1)
-    #scores_max_idx = np.argmax(scores_max)
-    #scores = scores[scores_max_idx:scores_max_idx+1,:]
-    #boxes = boxes[scores_max_idx:scores_max_idx+1, :]
 
     timer.toc()
     print('Detection took {:.3f}s'.format(timer.total_time))
@@ -203,7 +202,7 @@ if __name__ == '__main__':
     # model path
     demonet = args.demo_net
     dataset = args.dataset
-    tfmodel = os.path.join('../output', demonet, DATASETS[dataset][0], 'default',
+    tfmodel = os.path.join('..', 'output', demonet, DATASETS[dataset][0], 'default',
                               NETS[demonet][0])
 
 
@@ -242,7 +241,7 @@ if __name__ == '__main__':
     #     for j in range(256):
     #         im_names.append('scene_{}+{}.png'.format(str(i).zfill(4), str(j).zfill(4)))
 
-    im_names = os.listdir('../data/demo/Images/')
+    im_names = os.listdir('..', 'data', 'demo', 'Images')
     im_names.sort()
 
     # im_names = ['scene_0108+0036.png','scene_0129+0058.png','scene_0156+0010.png','scene_0174+0092.png']
@@ -261,13 +260,6 @@ if __name__ == '__main__':
         total_proposed_num += image_total_num
         total_gt_num += image_total_gt_num
         total_detected_gt_grasp_num += detected_gt_grasp_num
-        # print('Result of {}'.format(im_name))
-        # print('Number of true positive grasps: {}'.format(image_true_positive_num))
-        # print('Number of total grasps: {}'.format(image_total_num))
-        # print('Number of ground truth grasps: {}'.format(image_total_gt_num))
-        # print('Number of detected ground truth grasps: {}'.format(detected_gt_grasp_num))
-        # if image_total_num > 0:
-        #     print('Rate is {}'.format(image_true_positive_num / image_total_num))
 
     total_false_positive_num = total_proposed_num - total_true_positive_num
     total_missed_gt_grasp_num = total_gt_num - total_detected_gt_grasp_num

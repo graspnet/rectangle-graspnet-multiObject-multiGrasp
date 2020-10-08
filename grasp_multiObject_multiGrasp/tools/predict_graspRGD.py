@@ -19,7 +19,7 @@ from nets.vgg16 import vgg16
 from nets.resnet_v1 import resnetv1
 import scipy
 
-CAMERA_NAME = 'kinect'
+import graspnet_config
 
 pi = scipy.pi
 dot = scipy.dot
@@ -100,7 +100,7 @@ def demo(sess, net, image_name, CONF_THRESH):
         add_predicted_grasps(cls, dets, image_grasps, thresh=CONF_THRESH)
 
     image_grasps = np.array(image_grasps)
-    np.save(os.path.join('..', 'predicted_rectangle_grasp', scene_name, CAMERA_NAME, image_index), image_grasps)
+    np.save(os.path.join('..', 'predicted_rectangle_grasp', scene_name, graspnet_config.CAMERA_NAME, image_index), image_grasps)
 
 
 def parse_args():
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     # model path
     demonet = args.demo_net
     dataset = args.dataset
-    tfmodel = os.path.join('../output', demonet, DATASETS[dataset][0], 'default',
+    tfmodel = os.path.join('..', 'output', demonet, DATASETS[dataset][0], 'default',
                               NETS[demonet][0])
 
 
@@ -174,8 +174,8 @@ if __name__ == '__main__':
         scene_name = 'scene_{}'.format(str(scene_index).zfill(4)) # 'scene_0012'
         if not os.path.exists(os.path.join('..', 'predicted_rectangle_grasp', scene_name)):
             os.mkdir(os.path.join('..', 'predicted_rectangle_grasp', scene_name))
-        if not os.path.exists(os.path.join('..', 'predicted_rectangle_grasp', scene_name, CAMERA_NAME)):
-            os.mkdir(os.path.join('..', 'predicted_rectangle_grasp', scene_name, CAMERA_NAME))
+        if not os.path.exists(os.path.join('..', 'predicted_rectangle_grasp', scene_name, graspnet_config.CAMERA_NAME)):
+            os.mkdir(os.path.join('..', 'predicted_rectangle_grasp', scene_name, graspnet_config.CAMERA_NAME))
         print(scene_name)
         for img_index in range(256):
             im_name = '{}+{}.png'.format(scene_name, str(img_index).zfill(4))

@@ -33,10 +33,11 @@ cd ../../../..
 ```
 
 4. Download graspnet dataset from `https://graspnet.net/datasets.html`
-
-5. Modify the paths of the dataset in the source code. More details in [doc/Path.md](doc/Path.md)
-
-6. Create directories for processed data
+5. Modify the paths of the dataset and choose the type of the camera in the source code
+   - Line 6 in [data_process/script/data_preprocessing.py](data_process/script/data_preprocessing.py)  should be modified to the path of the graspnet dataset of your own
+   - Line 7 in [data_process/script/data_preprocessing.py](data_process/script/data_preprocessing.py)  should be modified to the camera type you want to choose
+   - Copy these two lines to [grasp_multiObject_multiGrasp/tools/graspnet_config.py](grasp_multiObject_multiGrasp/tools/graspnet_config.py)
+4. Create directories for processed data
 ```
 cd data_process
 mkdir grasp_data

@@ -8,13 +8,8 @@ CAMERA_NAME = 'kinect'
 # scene_name_list = os.listdir('../scenes/') # ['scene_0023', 'scene_0022', 'scene_0021', ...]
 # scene_name_list.sort()
 scene_name_list = []
-<<<<<<< HEAD
 for i in range(100, 190):
 # for i in [108, 129]:
-=======
-#for i in range(100):
-for i in range(0, 100):
->>>>>>> 709d73edc3fd7ef2f55bc6881f3d4ff8bc87ea48
     scene_name_list.append('scene_{}'.format(str(i).zfill(4)))
 
 print('************************************************')
