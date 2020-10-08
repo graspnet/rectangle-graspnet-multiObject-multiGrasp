@@ -3,11 +3,13 @@ import os
 import cv2
 import random
 
+GRASPNET_ROOT = '/DATA2/Benchmark/graspnet'
+CAMERA_NAME = 'kinect'
 # scene_name_list = os.listdir('../scenes/') # ['scene_0023', 'scene_0022', 'scene_0021', ...]
 # scene_name_list.sort()
 scene_name_list = []
-#for i in range(100):
 for i in range(100, 190):
+# for i in [108, 129]:
     scene_name_list.append('scene_{}'.format(str(i).zfill(4)))
 
 print('************************************************')
@@ -32,7 +34,8 @@ for scene_name in scene_name_list:
     print('------------------------------------------')
     print('Processing scene: {}'.format(scene_index))
     try:
-        rgb_name_list = os.listdir('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/') # ['0001.png', '0002.png', ...]
+        # rgb_name_list = os.listdir('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/') # ['0001.png', '0002.png', ...]
+        rgb_name_list = os.listdir(os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rgb'))
         rgb_name_list.sort()
     except:
         print('scene {} skipped'.format(scene_index))
@@ -49,19 +52,27 @@ for scene_name in scene_name_list:
     test_count = 0
     train_count = 0
 
-    if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index):
-        grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index + '/'
+    if os.path.exists(os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rectangle_grasp', scene_index)):
+    # if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index):
+        grasp_base_path = os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rectangle_grasp', scene_index)
+        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index + '/'
     else:
-        grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/'
+        grasp_base_path = os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rectangle_grasp')
+        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/'
 
     for rgb_name in rgb_name_list:
         img_index = rgb_name[:4] # 0000 / 0001 / 0002 ...
-        rgb_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/' + rgb_name # '../scenes/scene_0021/kinect/rgb/0000.png'
-        depth_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/depth/' + rgb_name # '../scenes/scene_0021/kinect/depth/0000.png'
-        grasp_path = grasp_base_path + img_index + '.npy' # '../scenes/scene_0021/kinect/rectangle_grasp/(0021/)0000.npy'
+        rgb_path = os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rgb', rgb_name)
+        # rgb_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/' + rgb_name # '../scenes/scene_0021/kinect/rgb/0000.png'
+        depth_path = os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'depth', rgb_name)
+        # depth_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/depth/' + rgb_name # '../scenes/scene_0021/kinect/depth/0000.png'
+        grasp_path = os.path.join(grasp_base_path, img_index+'.npy')
+        # grasp_path = grasp_base_path + img_index + '.npy' # '../scenes/scene_0021/kinect/rectangle_grasp/(0021/)0000.npy'
         img_name = scene_name + '+' + img_index # 'scene_0021+0000'
-        img_path = '../grasp_data/Images/' + img_name + '.png' # '../grasp_data/Images/scene_0021+0000.png'
-        anno_path = '../grasp_data/Annotations/' + img_name + '.txt' # '../grasp_data/Annotations/scene_0021+0000.txt'
+        img_path = os.path.join('..', 'grasp_data', 'Images', img_name+'.png')
+        # img_path = '../grasp_data/Images/' + img_name + '.png' # '../grasp_data/Images/scene_0021+0000.png'
+        anno_path = os.path.join('..', 'grasp_data', 'Annotations', img_name+'.txt')
+        # anno_path = '../grasp_data/Annotations/' + img_name + '.txt' # '../grasp_data/Annotations/scene_0021+0000.txt'
 
         try:
             grasp = np.load(grasp_path) # load the grasp annotationos, shape: (*, 6)
@@ -174,10 +185,12 @@ for scene_name in scene_name_list:
             # print(img[456][770:790])
             # cv2.imwrite('1.png', img)
     # record the list
-    f_train = open('../grasp_data/ImageSets/train.txt', 'a')
+    f_train = open(os.path.join('..', 'grasp_data', 'ImageSets', 'train.txt'), 'a')
+    # f_train = open('../grasp_data/ImageSets/train.txt', 'a')
     f_train.writelines(log_train_list)
     f_train.close()
-    f_test = open('../grasp_data/ImageSets/test.txt', 'a')
+    f_test = open(os.path.join('..', 'grasp_data', 'ImageSets', 'test.txt'), 'a')
+    # f_test = open('../grasp_data/ImageSets/test.txt', 'a')
     f_test.writelines(log_test_list)
     f_test.close()
     print('scene {} done'.format(scene_index))
