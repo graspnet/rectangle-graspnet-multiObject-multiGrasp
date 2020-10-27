@@ -7,7 +7,13 @@
 
 The code of this repo is mainly based on [grasp_multiObject_multiGrasp](https://github.com/ivalab/grasp_multiObject_multiGrasp).
 
-### Instructions
+### Environment
+
+```
+TODO
+```
+
+### Install
 
 1. Clone the code
 ```
@@ -32,35 +38,57 @@ make
 cd ../../../..
 ```
 
-4. Download graspnet dataset from `https://graspnet.net/datasets.html`
-5. Modify the paths of the dataset and choose the type of the camera in the source code
-   - Line 6 in [data_process/script/data_preprocessing.py](data_process/script/data_preprocessing.py)  should be modified to the path of the graspnet dataset of your own
-   - Line 7 in [data_process/script/data_preprocessing.py](data_process/script/data_preprocessing.py)  should be modified to the camera type you want to choose
-   - Copy these two lines to [grasp_multiObject_multiGrasp/tools/graspnet_config.py](grasp_multiObject_multiGrasp/tools/graspnet_config.py)
-4. Create directories for processed data
+### Graspnet Dataset
+
 ```
-cd data_process
-mkdir grasp_data
-cd grasp_data
-mkdir Annotations
-mkdir Images
-mkdir ImageSets
+mkdir graspnet_dataset
 ```
 
-7. Run data processing script
+Then download the graspnet dataset from `https://graspnet.net/datasets.html`
+
+- Move the dataset to [./graspnet_dataset](./graspnet_dataset)
+
+- Or you can link the path of the graspnet dataset to [./graspnet_dataset](./graspnet_dataset) by
+
+  ```
+  ln -s /path/to/graspnet ./graspnet_dataset
+  ```
+
+- Or you can modify GRASPNET_ROOT in [grasp_multiObject_multiGrasp/tools/graspnet_config.py](grasp_multiObject_multiGrasp/tools/graspnet_config.py) directly
+
+### Demo
+
+1. Download pretrained models
+
+   - Download the model from  [TODO](TODO)
+   - Move it to [grasp_multiObject_multiGrasp/output/res50/train/default/](grasp_multiObject_multiGrasp/output/res50/train/default/)
+
+2. Run demo
+
+   ```
+   cd grasp_multiObject_multiGrasp/tools
+   python demo_graspRGD.py --net res50 --dataset grasp
+   ```
+
+### Data Preprocessing
+
+1. Choose the type of the camera by changing CAMERA_NAME(line 2) in [grasp_multiObject_multiGrasp/tools/graspnet_config.py](grasp_multiObject_multiGrasp/tools/graspnet_config.py)
+2. Run data processing script
 ```
-cd ../script
+cd data_process/script
 python data_preprocessing.py
 cd ..
 ```
 
-8. Move the processed data
+3. Move the processed data
+
 ```
 mv grasp_data ../grasp_multiObject_multiGrasp/
 cd ..
 ```
 
-9. Train the model
+### Training
+
 ```
 cd grasp_multiObject_multiGrasp
 ./experiments/scripts/train_faster_rcnn.sh 1 graspRGB res50

@@ -54,7 +54,6 @@ def add_predicted_grasps(class_name, dets, image_grasps, thresh=0.5):
         bbox = dets[i, :4]
         score = dets[i, -1]
         # plot rotated rectangles
-        # pts = ar([[bbox[0],bbox[1]], [bbox[2], bbox[1]], [bbox[2], bbox[3]], [bbox[0], bbox[3]]])
         height = bbox[3] - bbox[1]
         cnt = ar([(bbox[0] + bbox[2])/2, (bbox[1] + bbox[3])/2])
         open_point = ar([bbox[2], (bbox[1] + bbox[3])/2])
@@ -62,6 +61,7 @@ def add_predicted_grasps(class_name, dets, image_grasps, thresh=0.5):
         this_grasp = list(cnt) + list(rotated_open_point)
         this_grasp.append(height)
         this_grasp.append(score)
+        this_grasp.append(-1)
         image_grasps.append(this_grasp)
 
 def demo(sess, net, image_name, CONF_THRESH):
@@ -70,11 +70,8 @@ def demo(sess, net, image_name, CONF_THRESH):
     # Load the demo image
     im_file = os.path.join(cfg.DATA_DIR, 'demo', 'Images', image_name)
     im = cv2.imread(im_file, cv2.IMREAD_UNCHANGED)
-    # im_rgb_file = '/DATA2/Benchmark/graspnet/scenes/' + image_name[:10] + '/kinect/rgb/' + image_name[11:15] + '.png'
-    # im_rgb = cv2.imread(im_rgb_file, cv2.IMREAD_UNCHANGED)
 
     scene_name = image_name[:10] # 'scene_0021'
-    # scene_index = scene_name[-4:]
     image_index = image_name[11:15] # '0003'
 
     # Detect all object classes and regress object bounds
@@ -83,7 +80,6 @@ def demo(sess, net, image_name, CONF_THRESH):
     scores, boxes = im_detect(sess, net, im)
 
     timer.toc()
-    # print('Detection took {:.3f}s'.format(timer.total_time))
 
     NMS_THRESH = 0.3
 
@@ -154,22 +150,6 @@ if __name__ == '__main__':
 
     CONF_THRESH = 0.0
 
-    # im_names = []
-    # for i in range(100, 190):
-    #     for j in range(256):
-    #         im_names.append('scene_{}+{}.png'.format(str(i).zfill(4), str(j).zfill(4)))
-
-    # im_names = os.listdir('../data/demo/Images/')
-    # im_names.sort()
-
-    # im_names = ['scene_0108+0036.png','scene_0129+0058.png','scene_0156+0010.png','scene_0174+0092.png']
-    # num_images = len(im_names)
-
-    # for im_name in im_names:
-    #     print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-    #     print(im_name)
-    #     demo(sess, net, im_name, CONF_THRESH)
-
     for scene_index in range(100, 190):
         scene_name = 'scene_{}'.format(str(scene_index).zfill(4)) # 'scene_0012'
         if not os.path.exists(os.path.join('..', 'predicted_rectangle_grasp', scene_name)):
@@ -180,10 +160,3 @@ if __name__ == '__main__':
         for img_index in range(256):
             im_name = '{}+{}.png'.format(scene_name, str(img_index).zfill(4))
             demo(sess, net, im_name, CONF_THRESH)
-
-    # np.save('result/total_false_positive_num', total_false_positive_num)
-    # np.save('result/total_proposed_num', total_proposed_num)
-    # np.save('result/total_missed_gt_grasp_num', total_missed_gt_grasp_num)
-    # np.save('result/total_gt_num', total_gt_num)
-    # np.save('result/FPPI', FPPI)
-    # np.save('result/miss_rate', miss_rate)

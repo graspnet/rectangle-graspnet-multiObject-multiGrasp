@@ -16,8 +16,9 @@ from datasets.pascal_voc import pascal_voc
 from datasets.coco import coco
 
 import numpy as np
+import os
 
-# Set up voc_<year>_<split> 
+# Set up voc_<year>_<split>
 for year in ['2007', '2012']:
   for split in ['train', 'val', 'trainval', 'test']:
     name = 'voc_{}_{}'.format(year, split)
@@ -36,7 +37,8 @@ for year in ['2015']:
     __sets[name] = (lambda split=split, year=year: coco(split, year))
 
 # Set up graspRGB_<split> using selective search "fast" mode # added by FC
-graspRGB_devkit_path = '/home/xusheng/Grasp/grasp_multiObject_multiGrasp'
+# graspRGB_devkit_path = '/home/xusheng/Grasp/grasp_multiObject_multiGrasp'
+graspRGB_devkit_path = os.path.abspath(os.path.join(os.path.split(os.path.abspath(__file__))[0], '..', '..'))
 for split in ['train', 'test']:
     name = '{}_{}'.format('graspRGB', split)
     __sets[name] = (lambda split=split: graspRGB(split, graspRGB_devkit_path))

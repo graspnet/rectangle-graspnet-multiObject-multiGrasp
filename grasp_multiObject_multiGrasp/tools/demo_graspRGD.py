@@ -32,6 +32,8 @@ from nets.resnet_v1 import resnetv1
 import scipy
 from shapely.geometry import Polygon
 
+import graspnet_config
+
 pi     = scipy.pi
 dot    = scipy.dot
 sin    = scipy.sin
@@ -64,13 +66,6 @@ def vis_detections(ax, image_name, im, class_name, dets, thresh=0.5):
         bbox = dets[i, :4]
         score = dets[i, -1]
 
-        #ax.add_patch(
-        #    plt.Rectangle((bbox[0], bbox[1]),
-        #                  bbox[2] - bbox[0],
-        #                  bbox[3] - bbox[1], fill=False,
-        #                  edgecolor='red', linewidth=3.5)
-        #    )
-
         # plot rotated rectangles
         pts = ar([[bbox[0],bbox[1]], [bbox[2], bbox[1]], [bbox[2], bbox[3]], [bbox[0], bbox[3]]])
         cnt = ar([(bbox[0] + bbox[2])/2, (bbox[1] + bbox[3])/2])
@@ -84,53 +79,27 @@ def vis_detections(ax, image_name, im, class_name, dets, thresh=0.5):
         plt.plot(pred_x[2:4],pred_y[2:4], color='k', alpha = 0.7, linewidth=1, solid_capstyle='round', zorder=2)
         plt.plot(pred_x[3:5],pred_y[3:5], color='r', alpha = 0.7, linewidth=3, solid_capstyle='round', zorder=2)
 
-        #ax.text(bbox[0], bbox[1] - 2,
-        #        '{:s} {:.3f}'.format(class_name, score),
-        #        bbox=dict(facecolor='blue', alpha=0.5),
-        #        fontsize=14, color='white')
-
-    #ax.set_title(('{} detections with '
-    #              'p({} | box) >= {:.1f}').format(class_name, class_name,
-    #                                              thresh),
-    #              fontsize=14)
-    #plt.axis('off')
-    #plt.tight_layout()
-
-    #save result
-    #savepath = './data/demo/results/' + str(image_name) + str(class_name) + '.png'
-    #plt.savefig(savepath)
-
-    #plt.draw()
-
 def demo(sess, net, image_name):
     """Detect object classes in an image using pre-computed object proposals."""
 
     # Load the demo image
     im_file = os.path.join(cfg.DATA_DIR, 'demo', image_name)
     im = cv2.imread(im_file, cv2.IMREAD_UNCHANGED)
-    #print(im)
-    im_rgb_file = '/DATA2/Benchmark/graspnet/scenes/' + image_name[:10] + '/kinect/rgb/' + image_name[11:15] + '.png'
+    im_rgb_file = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', image_name[:10], graspnet_config.CAMERA_NAME, 'rgb', image_name[11:15] + '.png')
+    # im_rgb_file = '/DATA2/Benchmark/graspnet/scenes/' + image_name[:10] + '/kinect/rgb/' + image_name[11:15] + '.png'
     im_rgb = cv2.imread(im_rgb_file, cv2.IMREAD_UNCHANGED)
-
-
 
     # Detect all object classes and regress object bounds
     timer = Timer()
     timer.tic()
     scores, boxes = im_detect(sess, net, im)
 
-    #scores_max = scores[:,1:-1].max(axis=1)
-    #scores_max_idx = np.argmax(scores_max)
-    #scores = scores[scores_max_idx:scores_max_idx+1,:]
-    #boxes = boxes[scores_max_idx:scores_max_idx+1, :]
-
-    #im = cv2.imread('/home/fujenchu/projects/deepLearning/tensorflow-finetune-flickr-style-master/data/grasps_ivalab/rgb_cropped320/rgb_0076Cropped320.png')
     timer.toc()
     print('Detection took {:.3f}s for {:d} object proposals'.format(timer.total_time, boxes.shape[0]))
 
     fig, ax = plt.subplots(figsize=(12, 12))
     # Visualize detections for each class
-    CONF_THRESH = 0.1	
+    CONF_THRESH = 0.1
     NMS_THRESH = 0.3
     for cls_ind, cls in enumerate(CLASSES[1:]):
         cls_ind += 1 # because we skipped background
@@ -141,16 +110,13 @@ def demo(sess, net, image_name):
         keep = nms(dets, NMS_THRESH)
         dets = dets[keep, :]
         vis_detections(ax, image_name, im_rgb, cls, dets, thresh=CONF_THRESH)
-        #tmp = max(cls_scores)
 
     plt.axis('off')
     plt.tight_layout()
 
-    #cv2.imshow('deepGrasp_top_score', im)
-    #choice = cv2.waitKey(100)
-    
     #save result
-    savepath = '../data/demo/results_all_cls/' + str(image_name)[:-4]
+    savepath = os.path.join('..', 'data', 'demo', 'results_all_cls', str(image_name)[:-4])
+    # savepath = '../data/demo/results_all_cls/' + str(image_name)[:-4]
     plt.savefig(savepath)
 
     plt.draw()
@@ -173,7 +139,7 @@ if __name__ == '__main__':
     # model path
     demonet = args.demo_net
     dataset = args.dataset
-    tfmodel = os.path.join('../output', demonet, DATASETS[dataset][0], 'default',
+    tfmodel = os.path.join('..', 'output', demonet, DATASETS[dataset][0], 'default',
                               NETS[demonet][0])
 
 
@@ -203,7 +169,6 @@ if __name__ == '__main__':
 
     print('Loaded network {:s}'.format(tfmodel))
 
-    #im_names = ['rgd_0076Cropped320.png','rgd_0095.png','pcd0122r_rgd_preprocessed_1.png','pcd0875r_rgd_preprocessed_1.png','resized_0875_2.png']
     im_names = ['scene_0108+0036.png','scene_0129+0058.png','scene_0156+0010.png','scene_0174+0092.png']
     for im_name in im_names:
         print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')

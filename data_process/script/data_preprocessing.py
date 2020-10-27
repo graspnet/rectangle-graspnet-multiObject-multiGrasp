@@ -2,9 +2,10 @@ import numpy as np
 import os
 import cv2
 import random
+import sys
+sys.path.append(os.path.join('..', '..', 'grasp_multiObject_multiGrasp', 'tools'))
+import graspnet_config
 
-GRASPNET_ROOT = '/DATA2/Benchmark/graspnet'
-CAMERA_NAME = 'kinect'
 # scene_name_list = os.listdir('../scenes/') # ['scene_0023', 'scene_0022', 'scene_0021', ...]
 # scene_name_list.sort()
 scene_name_list = []
@@ -26,16 +27,12 @@ f_image_skip = open('image_skip.txt', 'a')
 
 for scene_name in scene_name_list:
     scene_index = scene_name[-4:]
-    # if int(scene_index) < 100:
-    #     is_training = True
-    # else:
-    #     is_training = False
 
     print('------------------------------------------')
     print('Processing scene: {}'.format(scene_index))
     try:
-        # rgb_name_list = os.listdir('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/') # ['0001.png', '0002.png', ...]
-        rgb_name_list = os.listdir(os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rgb'))
+        # rgb_name_list = os.listdir('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/')
+        rgb_name_list = os.listdir(os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rgb')) # ['0001.png', '0002.png', ...]
         rgb_name_list.sort()
     except:
         print('scene {} skipped'.format(scene_index))
@@ -52,27 +49,25 @@ for scene_name in scene_name_list:
     test_count = 0
     train_count = 0
 
-    if os.path.exists(os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rectangle_grasp', scene_index)):
+    if os.path.exists(os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp', scene_index)):
     # if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index):
-        grasp_base_path = os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rectangle_grasp', scene_index)
+        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp', scene_index)
         # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index + '/'
     else:
-        grasp_base_path = os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rectangle_grasp')
+        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp')
         # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/'
 
     for rgb_name in rgb_name_list:
         img_index = rgb_name[:4] # 0000 / 0001 / 0002 ...
-        rgb_path = os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'rgb', rgb_name)
-        # rgb_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/' + rgb_name # '../scenes/scene_0021/kinect/rgb/0000.png'
-        depth_path = os.path.join(GRASPNET_ROOT, 'scenes', scene_name, CAMERA_NAME, 'depth', rgb_name)
-        # depth_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/depth/' + rgb_name # '../scenes/scene_0021/kinect/depth/0000.png'
-        grasp_path = os.path.join(grasp_base_path, img_index+'.npy')
-        # grasp_path = grasp_base_path + img_index + '.npy' # '../scenes/scene_0021/kinect/rectangle_grasp/(0021/)0000.npy'
+        rgb_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rgb', rgb_name) # '../scenes/scene_0021/kinect/rgb/0000.png'
+        # rgb_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/' + rgb_name
+        depth_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'depth', rgb_name) # '../scenes/scene_0021/kinect/depth/0000.png'
+        # depth_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/depth/' + rgb_name
+        grasp_path = os.path.join(grasp_base_path, img_index+'.npy') # '../scenes/scene_0021/kinect/rectangle_grasp/(0021/)0000.npy'
+        # grasp_path = grasp_base_path + img_index + '.npy'
         img_name = scene_name + '+' + img_index # 'scene_0021+0000'
         img_path = os.path.join('..', 'grasp_data', 'Images', img_name+'.png')
-        # img_path = '../grasp_data/Images/' + img_name + '.png' # '../grasp_data/Images/scene_0021+0000.png'
         anno_path = os.path.join('..', 'grasp_data', 'Annotations', img_name+'.txt')
-        # anno_path = '../grasp_data/Annotations/' + img_name + '.txt' # '../grasp_data/Annotations/scene_0021+0000.txt'
 
         try:
             grasp = np.load(grasp_path) # load the grasp annotationos, shape: (*, 6)
@@ -119,7 +114,7 @@ for scene_name in scene_name_list:
                 theta[i] = np.arctan((center_y[i] - open_point_y[i]) / (open_point_x[i] - center_x[i])) * 180 / np.pi
             else:
                 theta[i] = -90.0
-            rotation_class[i] = round((theta[i] + 90) / 10) + 1
+            rotation_class[i] = int(round((theta[i] + 90) / 10) + 1)
             if x_min[i] < 0 or y_min[i] < 0 or x_max[i] > 1280 or y_max[i] > 720:
                 continue
             f_anno.write('{} {} {} {} {}\n'.format(rotation_class[i], x_min[i], y_min[i], x_max[i], y_max[i]))
