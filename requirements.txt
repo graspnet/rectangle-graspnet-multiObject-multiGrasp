@@ -1,0 +1,38 @@
+absl-py==0.9.0
+astor==0.8.1
+certifi==2020.6.20
+cycler==0.10.0
+Cython @ file:///tmp/build/80754af9/cython_1594831565616/work
+easydict==1.9
+gast @ file:///tmp/build/80754af9/gast_1597433534803/work
+google-pasta==0.2.0
+grpcio @ file:///tmp/build/80754af9/grpcio_1597424460877/work
+h5py @ file:///tmp/build/80754af9/h5py_1593454121459/work
+importlib-metadata @ file:///tmp/build/80754af9/importlib-metadata_1593446433964/work
+Keras-Applications @ file:///tmp/build/80754af9/keras-applications_1594366238411/work
+Keras-Preprocessing==1.1.0
+kiwisolver==1.2.0
+Markdown @ file:///tmp/build/80754af9/markdown_1597433258348/work
+matplotlib @ file:///tmp/build/80754af9/matplotlib-base_1592846044287/work
+mkl-fft==1.1.0
+mkl-random==1.1.1
+mkl-service==2.3.0
+numpy==1.16.0
+olefile==0.46
+opencv-python==4.3.0.36
+Pillow @ file:///tmp/build/80754af9/pillow_1594307298074/work
+protobuf==3.12.4
+pyparsing==2.4.7
+python-dateutil==2.8.1
+PyYAML==5.3.1
+scipy @ file:///tmp/build/80754af9/scipy_1597686625380/work
+Shapely==1.7.0
+six==1.15.0
+tensorboard==1.14.0
+tensorflow==1.14.0
+tensorflow-estimator==1.14.0
+termcolor==1.1.0
+tornado==6.0.4
+Werkzeug==1.0.1
+wrapt==1.12.1
+zipp==3.1.0
