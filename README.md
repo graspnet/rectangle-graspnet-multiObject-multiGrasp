@@ -7,12 +7,6 @@
 
 The code of this repo is mainly based on [grasp_multiObject_multiGrasp](https://github.com/ivalab/grasp_multiObject_multiGrasp).
 
-### Environment
-
-```
-TODO
-```
-
 ### Install
 
 1. Clone the code
@@ -21,7 +15,13 @@ git clone https://github.com/graspnet/rectangle-graspnet-multiObject-multiGrasp
 cd rectangle-graspnet-multiObject-multiGrasp/grasp_multiObject_multiGrasp
 ```
 
-2. Build Cython modules
+2. Prepare environment (Need Anaconda or Miniconda)
+```
+conda env create -f grasp_env.yaml
+conda activate grasp
+```
+
+3. Build Cython modules
 ```
 cd lib
 make clean
@@ -29,7 +29,7 @@ make
 cd ..
 ```
 
-3. Install [Python COCO API](https://github.com/cocodataset/cocoapi)
+4. Install [Python COCO API](https://github.com/cocodataset/cocoapi)
 ```
 cd data
 git clone https://github.com/pdollar/coco.git
