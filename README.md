@@ -60,7 +60,7 @@ Then download the graspnet dataset from `https://graspnet.net/datasets.html`
 
 1. Download pretrained models
 
-   - Download the model from  [TODO](TODO)
+   - Download the model from  [Google Drive](https://drive.google.com/file/d/1QrjLDKr8eHgN0rM48YpWXY-sN89zJNim/view?usp=sharing) or [JBOX](https://jbox.sjtu.edu.cn/l/J5z6gE)
    - Move it to [grasp_multiObject_multiGrasp/output/res50/train/default/](grasp_multiObject_multiGrasp/output/res50/train/default/)
 
 2. Run demo
