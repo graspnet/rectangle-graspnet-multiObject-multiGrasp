@@ -6,10 +6,22 @@ import sys
 sys.path.append(os.path.join('..', '..', 'grasp_multiObject_multiGrasp', 'tools'))
 import graspnet_config
 
+if not os.path.exists(os.path.join('..', 'grasp_data')):
+    os.mkdir(os.path.join('..', 'grasp_data'))
+
+if not os.path.exists(os.path.join('..', 'grasp_data', 'Images')):
+    os.mkdir(os.path.join('..', 'grasp_data', 'Images'))
+
+if not os.path.exists(os.path.join('..', 'grasp_data', 'ImageSets')):
+    os.mkdir(os.path.join('..', 'grasp_data', 'ImageSets'))
+
+if not os.path.exists(os.path.join('..', 'grasp_data', 'Annotations')):
+    os.mkdir(os.path.join('..', 'grasp_data', 'Annotations'))
+
 # scene_name_list = os.listdir('../scenes/') # ['scene_0023', 'scene_0022', 'scene_0021', ...]
 # scene_name_list.sort()
 scene_name_list = []
-for i in range(100, 190):
+for i in range(0, 100):
 # for i in [108, 129]:
     scene_name_list.append('scene_{}'.format(str(i).zfill(4)))
 

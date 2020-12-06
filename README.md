@@ -56,6 +56,8 @@ Then download the graspnet dataset from `https://graspnet.net/datasets.html`
 
 - Or you can modify GRASPNET_ROOT in [grasp_multiObject_multiGrasp/tools/graspnet_config.py](grasp_multiObject_multiGrasp/tools/graspnet_config.py) directly
 
+**NOTICE:** If you set the path correctly, there should be a [./graspnet_dataset/scenes](./graspnet_dataset/scenes) directory in  [./graspnet_dataset](./graspnet_dataset)
+
 ### Demo
 
 1. Download pretrained models
