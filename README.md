@@ -56,7 +56,43 @@ Then download the graspnet dataset from `https://graspnet.net/datasets.html`
 
 - Or you can modify GRASPNET_ROOT in [grasp_multiObject_multiGrasp/tools/graspnet_config.py](grasp_multiObject_multiGrasp/tools/graspnet_config.py) directly
 
-**NOTICE:** If you set the path correctly, there should be a [./graspnet_dataset/scenes](./graspnet_dataset/scenes) directory in  [./graspnet_dataset](./graspnet_dataset)
+**NOTICE:** Your path should match the following structure details
+
+```
+graspnet_dataset
+|-- scenes
+    |-- scene_0000
+    |   |-- object_id_list.txt
+    |   |-- rs_wrt_kn.npy
+    |   |-- kinect
+    |   |   |-- rgb
+    |   |   |   |-- 0000.png to 0255.png
+    |   |   `-- depth
+    |   |   |   |-- 0000.png to 0255.png
+    |   |   `-- label
+    |   |   |   |-- 0000.png to 0255.png
+    |   |   `-- annotations
+    |   |   |   |-- 0000.xml to 0255.xml
+    |   |   `-- meta
+    |   |   |   |-- 0000.mat to 0255.mat
+    |   |   `-- rect
+    |   |   |   |-- 0000.npy to 0255.npy
+    |   |   `-- camK.npy
+    |   |   `-- camera_poses.npy
+    |   |   `-- cam0_wrt_table.npy
+    |   |
+    |   `-- realsense
+    |       |-- same structure as kinect
+    |
+    |
+    `-- scene_0001
+    |
+    `-- ... ...
+    |
+    `-- scene_0189
+```
+
+
 
 ### Demo
 

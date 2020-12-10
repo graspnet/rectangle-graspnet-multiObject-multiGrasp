@@ -61,13 +61,13 @@ for scene_name in scene_name_list:
     test_count = 0
     train_count = 0
 
-    if os.path.exists(os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp', scene_index)):
-    # if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index):
-        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp', scene_index)
-        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index + '/'
+    if os.path.exists(os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rect', scene_index)):
+    # if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rect/' + scene_index):
+        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rect', scene_index)
+        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rect/' + scene_index + '/'
     else:
-        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp')
-        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/'
+        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rect')
+        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rect/'
 
     for rgb_name in rgb_name_list:
         img_index = rgb_name[:4] # 0000 / 0001 / 0002 ...
@@ -75,7 +75,7 @@ for scene_name in scene_name_list:
         # rgb_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rgb/' + rgb_name
         depth_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'depth', rgb_name) # '../scenes/scene_0021/kinect/depth/0000.png'
         # depth_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/depth/' + rgb_name
-        grasp_path = os.path.join(grasp_base_path, img_index+'.npy') # '../scenes/scene_0021/kinect/rectangle_grasp/(0021/)0000.npy'
+        grasp_path = os.path.join(grasp_base_path, img_index+'.npy') # '../scenes/scene_0021/kinect/rect/(0021/)0000.npy'
         # grasp_path = grasp_base_path + img_index + '.npy'
         img_name = scene_name + '+' + img_index # 'scene_0021+0000'
         img_path = os.path.join('..', 'grasp_data', 'Images', img_name+'.png')

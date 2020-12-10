@@ -87,13 +87,13 @@ def count_true_positive(class_name, dets, theta, true_polygon_list, detected_gt_
 def get_true_grasps(scene_name, image_index):
     # Load the ground truth grasps
     scene_index = scene_name[-4:]
-    if os.path.exists(os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp', scene_index)):
-    # if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index):
-        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp', scene_index)
-        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/' + scene_index + '/'
+    if os.path.exists(os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rect', scene_index)):
+    # if os.path.exists('/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rect/' + scene_index):
+        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rect', scene_index)
+        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rect/' + scene_index + '/'
     else:
-        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rectangle_grasp')
-        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rectangle_grasp/'
+        grasp_base_path = os.path.join(graspnet_config.GRASPNET_ROOT, 'scenes', scene_name, graspnet_config.CAMERA_NAME, 'rect')
+        # grasp_base_path = '/DATA2/Benchmark/graspnet/scenes/' + scene_name + '/kinect/rect/'
     grasp_path = os.path.join(grasp_base_path, image_index + '.npy')
     # grasp_path = grasp_base_path + image_index + '.npy'
     grasp = np.load(grasp_path)
