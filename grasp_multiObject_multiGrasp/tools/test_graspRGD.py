@@ -97,7 +97,7 @@ def get_true_grasps(scene_name, image_index):
     grasp_path = os.path.join(grasp_base_path, image_index + '.npy')
     # grasp_path = grasp_base_path + image_index + '.npy'
     grasp = np.load(grasp_path)
-    mask = grasp[:, 5] <= 0.1
+    mask = grasp[:, 5] < 0.2
     grasp = grasp[mask]
     center_x = grasp[:, 0] # shape: (*, )
     center_y = grasp[:, 1] # shape: (*, )
