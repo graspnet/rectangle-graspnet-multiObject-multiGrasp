@@ -127,6 +127,13 @@ cd ..
 
 ### Training
 
+1. Download the `res50` pretrained model
+
+   - Download the model from [JBOX](https://jbox.sjtu.edu.cn/l/Vooj01)
+
+   - Move the `res50.ckpt` file to [grasp_multiObject_multiGrasp/data/imagenet_weights/](grasp_multiObject_multiGrasp/data/imagenet_weights/)
+
+2. Training
 ```
 cd grasp_multiObject_multiGrasp
 ./experiments/scripts/train_faster_rcnn.sh 1 graspRGB res50
