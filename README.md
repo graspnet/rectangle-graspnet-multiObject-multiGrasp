@@ -106,6 +106,7 @@ graspnet_dataset
    ```
    cd grasp_multiObject_multiGrasp/tools
    python demo_graspRGD.py --net res50 --dataset grasp
+   cd ../..
    ```
 
 ### Data Preprocessing
@@ -133,8 +134,20 @@ cd ..
 
    - Move the `res50.ckpt` file to [grasp_multiObject_multiGrasp/data/imagenet_weights/](grasp_multiObject_multiGrasp/data/imagenet_weights/)
 
-2. Training
+2. If you have stored the pretrained models in [grasp_multiObject_multiGrasp/output/res50/train/default/](grasp_multiObject_multiGrasp/output/res50/train/default/)
+
+   - Make sure there's nothing in [grasp_multiObject_multiGrasp/output/res50/train/default/](grasp_multiObject_multiGrasp/output/res50/train/default/)
+
+   - You can rename the folder. For example:
+
+     ```
+     mv grasp_multiObject_multiGrasp/output/res50 grasp_multiObject_multiGrasp/output/res50_pretrained
+     ```
+
+   - Or you can move the folder [grasp_multiObject_multiGrasp/output/res50/](grasp_multiObject_multiGrasp/output/res50/) to somewhere else
+
+3. Training
 ```
 cd grasp_multiObject_multiGrasp
-./experiments/scripts/train_faster_rcnn.sh 1 graspRGB res50
+./experiments/scripts/train_faster_rcnn.sh 0 graspRGB res50
 ```
