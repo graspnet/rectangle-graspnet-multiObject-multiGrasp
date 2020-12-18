@@ -98,7 +98,7 @@ graspnet_dataset
 
 1. Download pretrained models
 
-   - Download the model from  [Google Drive](https://drive.google.com/file/d/1QrjLDKr8eHgN0rM48YpWXY-sN89zJNim/view?usp=sharing) or [JBOX](https://jbox.sjtu.edu.cn/l/J5z6gE)
+   - Download the model from [Google Drive](https://drive.google.com/file/d/1QrjLDKr8eHgN0rM48YpWXY-sN89zJNim/view?usp=sharing), or [JBOX](https://jbox.sjtu.edu.cn/l/J5z6gE), or [Baidu Pan (Password: v9j7)](https://pan.baidu.com/s/19Vp8DWbpFdDQfeICVwRTew)
    - Move it to [grasp_multiObject_multiGrasp/output/res50/train/default/](grasp_multiObject_multiGrasp/output/res50/train/default/)
 
 2. Run demo
@@ -130,7 +130,7 @@ cd ..
 
 1. Download the `res50` pretrained model
 
-   - Download the model from [JBOX](https://jbox.sjtu.edu.cn/l/Vooj01)
+   - Download the model from [Google Drive](https://drive.google.com/file/d/1srBA9KQZJnuI59kZUZ7lGWWN6bcTzVNC/view?usp=sharing), or [JBOX](https://jbox.sjtu.edu.cn/l/Vooj01), or [Baidu Pan (Password: tl84)](https://pan.baidu.com/s/1PhGBwKVd5o0Q9qNIy8AI4Q)
 
    - Move the `res50.ckpt` file to [grasp_multiObject_multiGrasp/data/imagenet_weights/](grasp_multiObject_multiGrasp/data/imagenet_weights/)
 
@@ -138,13 +138,13 @@ cd ..
 
    - Make sure there's nothing in [grasp_multiObject_multiGrasp/output/res50/train/default/](grasp_multiObject_multiGrasp/output/res50/train/default/)
 
-   - You can rename the folder. For example:
+   - You can rename the directory. For example:
 
      ```
      mv grasp_multiObject_multiGrasp/output/res50 grasp_multiObject_multiGrasp/output/res50_pretrained
      ```
 
-   - Or you can move the folder [grasp_multiObject_multiGrasp/output/res50/](grasp_multiObject_multiGrasp/output/res50/) to somewhere else
+   - Or you can move the directory [grasp_multiObject_multiGrasp/output/res50/](grasp_multiObject_multiGrasp/output/res50/) to somewhere else
 
 3. Training
 ```
