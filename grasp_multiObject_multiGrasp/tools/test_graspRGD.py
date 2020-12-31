@@ -29,7 +29,7 @@ sin = scipy.sin
 cos = scipy.cos
 ar = scipy.array
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1' # Choose GPU
+os.environ['CUDA_VISIBLE_DEVICES'] = '0' # Choose GPU
 
 CLASSES = ('__background__',
            'angle_01', 'angle_02', 'angle_03', 'angle_04', 'angle_05',
@@ -241,7 +241,7 @@ if __name__ == '__main__':
     #     for j in range(256):
     #         im_names.append('scene_{}+{}.png'.format(str(i).zfill(4), str(j).zfill(4)))
 
-    im_names = os.listdir('..', 'data', 'demo', 'Images')
+    im_names = os.listdir(os.path.join('..', 'data', 'demo', 'Images'))
     im_names.sort()
 
     # im_names = ['scene_0108+0036.png','scene_0129+0058.png','scene_0156+0010.png','scene_0174+0092.png']

@@ -1,0 +1,11 @@
+.vscode
+*.pyc
+*.so
+/__pycache__/
+/__pycache__/*
+data_process/grasp_data/*
+graspnet_dataset
+data_process/script/image_skip.txt
+data_process/script/scene_skip.txt
+*.npz
+*.npy
