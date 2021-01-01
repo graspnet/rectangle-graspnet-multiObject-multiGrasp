@@ -15,15 +15,6 @@ EXTRA_ARGS=${array[@]:3:$len}
 EXTRA_ARGS_SLUG=${EXTRA_ARGS// /_}
 
 case ${DATASET} in
-  graspRGB)
-    TRAIN_IMDB="graspRGB_train"
-    TEST_IMDB="graspRGB_test"
-    STEPSIZE=50000
-    ITERS=240000
-    #ANCHORS="[2,4,8,16,32]"
-    ANCHORS="[8,16,32]"
-    RATIOS="[0.5,1,2]"
-    ;;
   pascal_voc)
     TRAIN_IMDB="voc_2007_trainval"
     TEST_IMDB="voc_2007_test"
