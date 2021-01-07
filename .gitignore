@@ -10,3 +10,4 @@ data_process/script/scene_skip.txt
 *.npz
 *.npy
 grasp_multiObject_multiGrasp/data/coco/
+grasp_multiObject_multiGrasp/tools/result_/
