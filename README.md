@@ -148,6 +148,13 @@ cd ..
 
 3. Training
 ```
-cd grasp_multiObject_multiGrasp
-./experiments/scripts/train_faster_rcnn.sh 0 graspRGB res50
+./train_grasp.sh
 ```
+
+in the end of training the training script will call `test_faster_rcnn.sh`, but that file wasnot carefully rewrited, so you will get a 'no dataset' and then exit. its ok, go to next part: test.
+
+4. Testing
+
+```
+./test_grasp.sh
+``

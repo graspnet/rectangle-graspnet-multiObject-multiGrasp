@@ -29,7 +29,7 @@ sin = scipy.sin
 cos = scipy.cos
 ar = scipy.array
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1' # Choose GPU
+os.environ['CUDA_VISIBLE_DEVICES'] = '0' # Choose GPU
 
 CLASSES = ('__background__',
            'angle_01', 'angle_02', 'angle_03', 'angle_04', 'angle_05',

@@ -1,0 +1,12 @@
+grasp_data
+tensorboard
+output
+log.txt
+env.txt
+data/coco
+data/cache
+data/demo/Images/
+data/imagenet_weights/*
+*.pyc
+*.cpython-36.pyc
+lib/datasets/__pycache__
