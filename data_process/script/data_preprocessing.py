@@ -98,7 +98,7 @@ for scene_name in scene_name_list:
         img = np.concatenate((reshaped_depth_img, reshaped_g_img, reshaped_r_img), axis=-1) # RGD
 
         # Processing grasp
-        mask = grasp[:, 5] < 0.2
+        mask = grasp[:, 5] > 0.8
         grasp = grasp[mask]
         center_x = grasp[:, 0] # shape: (*, )
         center_y = grasp[:, 1] # shape: (*, )
