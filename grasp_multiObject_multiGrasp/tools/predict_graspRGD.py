@@ -27,7 +27,7 @@ sin = scipy.sin
 cos = scipy.cos
 ar = scipy.array
 
-os.environ['CUDA_VISIBLE_DEVICES'] = '1' # Choose GPU
+# os.environ['CUDA_VISIBLE_DEVICES'] = '0' # Choose GPU
 
 CLASSES = ('__background__',
            'angle_01', 'angle_02', 'angle_03', 'angle_04', 'angle_05',
@@ -152,10 +152,13 @@ if __name__ == '__main__':
 
     for scene_index in range(100, 190):
         scene_name = 'scene_{}'.format(str(scene_index).zfill(4)) # 'scene_0012'
-        if not os.path.exists(os.path.join('..', 'predicted_rectangle_grasp', scene_name)):
-            os.mkdir(os.path.join('..', 'predicted_rectangle_grasp', scene_name))
-        if not os.path.exists(os.path.join('..', 'predicted_rectangle_grasp', scene_name, graspnet_config.CAMERA_NAME)):
-            os.mkdir(os.path.join('..', 'predicted_rectangle_grasp', scene_name, graspnet_config.CAMERA_NAME))
+        pred_folder_name = 'predicted_rectangle_grasp'
+        if not os.path.exists(os.path.join('..', pred_folder_name)):
+            os.mkdir(os.path.join('..', pred_folder_name))
+        if not os.path.exists(os.path.join('..', pred_folder_name, scene_name)):
+            os.mkdir(os.path.join('..', pred_folder_name, scene_name))
+        if not os.path.exists(os.path.join('..', pred_folder_name, scene_name, graspnet_config.CAMERA_NAME)):
+            os.mkdir(os.path.join('..', pred_folder_name, scene_name, graspnet_config.CAMERA_NAME))
         print(scene_name)
         for img_index in range(256):
             im_name = '{}+{}.png'.format(scene_name, str(img_index).zfill(4))
